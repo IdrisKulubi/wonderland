@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { List, X } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { siteConfig, navigation } from "@/lib/data/site";
@@ -11,6 +11,7 @@ export function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const pathname = usePathname();
+    const router = useRouter();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -49,6 +50,37 @@ export function Header() {
         return colors[accent] || "var(--wl-emerald)";
     };
 
+    // Handle smooth scrolling for anchor links
+    const handleNavClick = useCallback(
+        (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+            // Check if it's an anchor link on homepage
+            if (href.startsWith("/#")) {
+                e.preventDefault();
+                const targetId = href.replace("/#", "");
+
+                // If already on homepage, smooth scroll
+                if (pathname === "/") {
+                    const element = document.getElementById(targetId);
+                    if (element) {
+                        element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                } else {
+                    // Navigate to homepage first, then scroll
+                    router.push("/");
+                    setTimeout(() => {
+                        const element = document.getElementById(targetId);
+                        if (element) {
+                            element.scrollIntoView({ behavior: "smooth", block: "start" });
+                        }
+                    }, 100);
+                }
+
+                setIsMobileMenuOpen(false);
+            }
+        },
+        [pathname, router]
+    );
+
     return (
         <>
             <header
@@ -80,33 +112,25 @@ export function Header() {
 
                         {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center gap-8">
-                            {navigation.map((item) => {
-                                const isActive = pathname === item.href;
-                                return (
-                                    <Link
-                                        key={item.name}
-                                        href={item.href}
-                                        className={cn(
-                                            "relative py-2 text-sm font-medium transition-colors",
-                                            isScrolled
-                                                ? isActive
-                                                    ? "text-[var(--wl-emerald)]"
-                                                    : "text-[var(--wl-charcoal)] hover:text-[var(--wl-emerald)]"
-                                                : isActive
-                                                    ? "text-white"
-                                                    : "text-white/80 hover:text-white"
-                                        )}
-                                    >
-                                        {item.name}
-                                        {isActive && (
-                                            <span
-                                                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
-                                                style={{ backgroundColor: getAccentColor(item.accent) }}
-                                            />
-                                        )}
-                                    </Link>
-                                );
-                            })}
+                            {navigation.map((item) => (
+                                <a
+                                    key={item.name}
+                                    href={item.href}
+                                    onClick={(e) => handleNavClick(e, item.href)}
+                                    className={cn(
+                                        "relative py-2 text-sm font-medium transition-colors cursor-pointer",
+                                        isScrolled
+                                            ? "text-[var(--wl-charcoal)] hover:text-[var(--wl-emerald)] dark:text-white dark:hover:text-[var(--wl-emerald)]"
+                                            : "text-white/80 hover:text-white"
+                                    )}
+                                >
+                                    {item.name}
+                                    <span
+                                        className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full scale-x-0 hover:scale-x-100 transition-transform origin-left"
+                                        style={{ backgroundColor: getAccentColor(item.accent) }}
+                                    />
+                                </a>
+                            ))}
                         </div>
 
                         {/* Mobile Menu Button */}
@@ -146,27 +170,20 @@ export function Header() {
             >
                 <div className="flex flex-col h-full p-6 pt-24">
                     <nav className="flex flex-col gap-2">
-                        {navigation.map((item) => {
-                            const isActive = pathname === item.href;
-                            return (
-                                <Link
-                                    key={item.name}
-                                    href={item.href}
-                                    className={cn(
-                                        "flex items-center gap-4 px-4 py-4 rounded-xl text-lg font-medium transition-colors",
-                                        isActive
-                                            ? "bg-[var(--wl-emerald)]/10 text-[var(--wl-emerald)]"
-                                            : "text-[var(--wl-charcoal)] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                                    )}
-                                >
-                                    <span
-                                        className="w-2 h-2 rounded-full"
-                                        style={{ backgroundColor: getAccentColor(item.accent) }}
-                                    />
-                                    {item.name}
-                                </Link>
-                            );
-                        })}
+                        {navigation.map((item) => (
+                            <a
+                                key={item.name}
+                                href={item.href}
+                                onClick={(e) => handleNavClick(e, item.href)}
+                                className="flex items-center gap-4 px-4 py-4 rounded-xl text-lg font-medium text-[var(--wl-charcoal)] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                            >
+                                <span
+                                    className="w-2 h-2 rounded-full"
+                                    style={{ backgroundColor: getAccentColor(item.accent) }}
+                                />
+                                {item.name}
+                            </a>
+                        ))}
                     </nav>
 
                     {/* Mobile Menu Footer */}

@@ -1,3 +1,9 @@
 export { Hero } from "./hero";
 export { EcosystemCircle } from "./ecosystem-circle";
 export { WhyUs } from "./why-us";
+export { TrustBar } from "./trust-bar";
+export { FeedsPreview } from "./feeds-preview";
+export { FarmsPreview } from "./farms-preview";
+export { ProductsPreview } from "./products-preview";
+export { AcademyPreview } from "./academy-preview";
+export { FinalCTA } from "./final-cta";

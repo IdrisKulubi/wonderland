@@ -16,11 +16,11 @@ export const siteConfig = {
 };
 
 export const navigation = [
-    { name: "Feeds", href: "/feeds", accent: "gold" },
-    { name: "Farms", href: "/farms", accent: "leaf" },
-    { name: "Products", href: "/products", accent: "coral" },
-    { name: "Academy", href: "/academy", accent: "blue" },
-    { name: "Contact", href: "/contact", accent: "emerald" },
+    { name: "Feeds", href: "/#feeds", fullPage: "/feeds", accent: "gold" },
+    { name: "Farms", href: "/#farms", fullPage: "/farms", accent: "leaf" },
+    { name: "Products", href: "/#products", fullPage: "/products", accent: "coral" },
+    { name: "Academy", href: "/#academy", fullPage: "/academy", accent: "blue" },
+    { name: "Contact", href: "/#contact", fullPage: "/contact", accent: "emerald" },
 ];
 
 // Homepage content
