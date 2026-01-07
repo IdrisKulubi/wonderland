@@ -72,6 +72,5 @@ export const whyUsContent = {
     stats: [
         { value: 100, suffix: "%", label: "Traceable" },
         { value: 0, suffix: "%", label: "Antibiotics" },
-        { value: 15, suffix: "+", label: "Years Experience" },
     ],
 };
