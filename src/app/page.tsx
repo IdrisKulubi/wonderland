@@ -1,5 +1,11 @@
-import { ComponentExample } from "@/components/component-example";
+import { Hero, EcosystemCircle, WhyUs } from "@/components/home";
 
-export default function Page() {
-return <ComponentExample />;
+export default function HomePage() {
+    return (
+        <>
+            <Hero />
+            <EcosystemCircle />
+            <WhyUs />
+        </>
+    );
 }
