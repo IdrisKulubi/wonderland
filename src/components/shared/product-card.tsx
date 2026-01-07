@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
-import { useScaleOnScroll } from "@/lib/gsap";
 import type { Product } from "@/lib/data/products";
 import { siteConfig } from "@/lib/data/site";
 import { ImageSquare } from "@phosphor-icons/react";
@@ -13,7 +12,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, accentColor = "var(--wl-emerald)" }: ProductCardProps) {
-    const cardRef = useScaleOnScroll();
+    const cardRef = useRef<HTMLDivElement>(null);
     const [imageError, setImageError] = useState(false);
 
     const handleEnquire = () => {

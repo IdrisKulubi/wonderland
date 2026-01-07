@@ -58,7 +58,7 @@ export const courses: Course[] = [
             "Business planning and projections",
             "Digital tools for farm management",
         ],
-        image: "/images/academy/farm-business.jpg",
+        image: "/images/farms-hero.jpg",
     },
     {
         id: "poultry-production",
@@ -74,7 +74,7 @@ export const courses: Course[] = [
             "Disease prevention and biosecurity",
             "Marketing and value addition",
         ],
-        image: "/images/academy/poultry-production.jpg",
+        image: "/images/feeds-hero.jpg",
     },
 ];
 

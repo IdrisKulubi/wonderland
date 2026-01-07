@@ -205,18 +205,27 @@ export function useStaggerReveal(
         if (!ref.current) return;
 
         const ctx = gsap.context(() => {
-            gsap.from(ref.current!.children, {
-                y: options.y ?? 40,
-                opacity: 0,
-                duration: options.duration ?? defaultDuration,
-                stagger: options.stagger ?? 0.15,
-                ease: defaultEase,
-                scrollTrigger: {
-                    trigger: ref.current,
-                    start: "top 80%",
-                    toggleActions: "play none none none",
+            const children = ref.current!.children;
+            if (children.length === 0) return;
+
+            gsap.fromTo(children,
+                {
+                    y: options.y ?? 40,
+                    opacity: 0,
                 },
-            });
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: options.duration ?? defaultDuration,
+                    stagger: options.stagger ?? 0.15,
+                    ease: defaultEase,
+                    scrollTrigger: {
+                        trigger: ref.current,
+                        start: "top 85%",
+                        toggleActions: "play none none none",
+                    },
+                }
+            );
         }, ref);
 
         return () => ctx.revert();

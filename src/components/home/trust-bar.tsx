@@ -10,7 +10,6 @@ const certifications = [
 ];
 
 const stats = [
-    { value: "15+", label: "Years in Business" },
     { value: "500+", label: "Head of Cattle" },
     { value: "10+", label: "Products" },
     { value: "1000+", label: "Farmers Trained" },

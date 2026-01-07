@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useScaleOnScroll } from "@/lib/gsap";
+import { useRef } from "react";
 import type { Course } from "@/lib/data/courses";
 import { Calendar, Clock, CurrencyCircleDollar } from "@phosphor-icons/react";
 
@@ -11,7 +11,7 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course, onApply }: CourseCardProps) {
-    const cardRef = useScaleOnScroll();
+    const cardRef = useRef<HTMLDivElement>(null);
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat("en-KE", {
