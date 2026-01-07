@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { useScaleOnScroll } from "@/lib/gsap";
 import type { Product } from "@/lib/data/products";
 import { siteConfig } from "@/lib/data/site";
+import { ImageSquare } from "@phosphor-icons/react";
 
 interface ProductCardProps {
     product: Product;
@@ -12,6 +14,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product, accentColor = "var(--wl-emerald)" }: ProductCardProps) {
     const cardRef = useScaleOnScroll();
+    const [imageError, setImageError] = useState(false);
 
     const handleEnquire = () => {
         const message = encodeURIComponent(
@@ -25,13 +28,21 @@ export function ProductCard({ product, accentColor = "var(--wl-emerald)" }: Prod
         <div ref={cardRef} className="card-wl overflow-hidden group">
             {/* Image */}
             <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
-                <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
+                {!imageError ? (
+                    <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        onError={() => setImageError(true)}
+                    />
+                ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                        <ImageSquare size={48} weight="thin" />
+                        <span className="text-sm mt-2">{product.name}</span>
+                    </div>
+                )}
             </div>
 
             {/* Content */}
