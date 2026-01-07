@@ -99,7 +99,6 @@ export function FarmsPreview() {
                         <div className="grid grid-cols-2 gap-6">
                             <StatCounter value={500} label="Head of Cattle" />
                             <StatCounter value={100} label="Traceability" />
-                            <StatCounter value={15} label="Years Experience" />
                             <StatCounter value={0} label="Antibiotics Used" />
                         </div>
                     </div>
